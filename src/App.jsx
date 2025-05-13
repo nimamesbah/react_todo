@@ -5,17 +5,36 @@ import { useRef, useState } from 'react'
 
 function App() {
   const [todos  , setTodo] = useState([])
+  let [inEdit ,setInEdit]= useState(null)
     
     function AddTodo(){
         const val = document.querySelector("input")
         console.log(val)
         
-        setTodo([...todos,{id:Math.random()*100,text:val.value,}])
+        setTodo([...todos,{id:`${Math.random()*100}`,text:val.value,isDone:false}])
 
         val.value=""
 
       }
-    console.log(todos)
+    function isDoneHandle(event){
+      
+      const element =todos.find(todo=> todo.id===event.target.id)
+      if(element.isDone===false)
+        element.isDone=true
+      else
+        element.isDone=false
+      event.target.checked=element.isDone
+    
+    }
+    function editHandle(event,id){
+      if(event.target.innerHTML==="save")
+        setInEdit(inEdit=null)
+      else
+      setInEdit(inEdit=id)
+      
+
+    }
+
     
   
   return (
@@ -25,7 +44,11 @@ function App() {
       <button onClick={AddTodo} className='ml-5'>add Todo</button>
       <ul>
         {todos.map(todo=> 
-         <Items id={todo.id} text={todo.text} />
+          <li id={todo.id}>
+          <h1 className='inline'>{todo.text}</h1>
+          <input id={todo.id} onChange={isDoneHandle}  type="checkbox"   />
+          <button id={todo.id} className='ml-3 border px-2.5' onClick={()=>editHandle(event,todo.id)}>{inEdit===todo.id?"save":"edit"}</button>
+      </li>    
         )}
 
           
