@@ -9,7 +9,6 @@ function App() {
     
     function AddTodo(){
         const val = document.querySelector("input")
-        console.log(val)
         
         setTodo([...todos,{id:`${Math.random()*100}`,text:val.value,isDone:false}])
 
@@ -39,9 +38,14 @@ function App() {
 
       }
 
-    
+    }
+    function deleteItem(id){
       
-
+      // const index = todos.findIndex(todo => todo.id === id)
+      // console.log("ind",index)
+      setTodo(prev => prev.filter(todo => todo.id !==id))
+      // setTodo(prev => prev.splice(index,1))
+      
     }
 
     
@@ -53,14 +57,13 @@ function App() {
       <button onClick={AddTodo} className='ml-5'>add Todo</button>
       <ul>
         {todos.map(todo=> 
-          <li id={todo.id}>
+        <li id={todo.id}>
           {inEdit!==todo.id ? <h1 id={`text${todo.id}`} className='inline mr-3'>{todo.text}</h1> : <input id={`inEdit${todo.id}`} className='border ' type='text' placeholder={todo.text}/>}
           <input id={todo.id} onChange={isDoneHandle}  type="checkbox"   />
           <button id={todo.id} className='ml-3 border px-2.5' onClick={()=>editHandle(event,todo.id)}>{inEdit===todo.id?"save":"edit"}</button>
-      </li>    
-        )}
-
-          
+          <button onClick={()=>deleteItem(todo.id)}>delete</button>
+        </li>    
+        )} 
       </ul>
       
     </>
