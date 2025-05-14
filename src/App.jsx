@@ -9,8 +9,10 @@ function App() {
     
     function AddTodo(){
         const val = document.querySelector("input")
+        if(val.value!=="")
+          setTodo([...todos,{id:`${Math.random()*100}`,text:val.value,isDone:false}])
+
         
-        setTodo([...todos,{id:`${Math.random()*100}`,text:val.value,isDone:false}])
 
         val.value=""
 
