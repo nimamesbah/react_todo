@@ -31,6 +31,15 @@ function App() {
         setInEdit(inEdit=null)
       else
       setInEdit(inEdit=id)
+      if(event.target.innerHTML==="save"){
+        const inVal = document.getElementById(`inEdit${id}`).value
+        const result = todos.find(todo => todo.id === id)
+        if(document.getElementById(`inEdit${id}`).value!=="")
+        result.text=inVal
+
+      }
+
+    
       
 
     }
@@ -45,7 +54,7 @@ function App() {
       <ul>
         {todos.map(todo=> 
           <li id={todo.id}>
-          <h1 className='inline'>{todo.text}</h1>
+          {inEdit!==todo.id ? <h1 id={`text${todo.id}`} className='inline mr-3'>{todo.text}</h1> : <input id={`inEdit${todo.id}`} className='border ' type='text' placeholder={todo.text}/>}
           <input id={todo.id} onChange={isDoneHandle}  type="checkbox"   />
           <button id={todo.id} className='ml-3 border px-2.5' onClick={()=>editHandle(event,todo.id)}>{inEdit===todo.id?"save":"edit"}</button>
       </li>    
